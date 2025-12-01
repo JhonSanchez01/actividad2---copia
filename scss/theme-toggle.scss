@@ -1,0 +1,60 @@
+.theme-switcher {
+  @include flex(row, center, center);
+  gap: var(--spacing-xs);
+  cursor: pointer;
+
+  .theme-switch-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+
+    #theme-toggle {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:checked + .theme-slider {
+        background-color: var(--secondary-color);
+      }
+
+      &:checked + .theme-slider:before {
+        transform: translateX(26px);
+      }
+    }
+
+    .theme-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 24px;
+      @include transition(background-color, 0.3s, ease);
+
+      &:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        border-radius: 50%;
+        @include transition(transform, 0.3s, ease);
+      }
+    }
+  }
+
+  .theme-icon {
+    font-size: 1rem;
+    color: var(--text-color);
+  }
+
+  .theme-text {
+    font-size: 0.875rem;
+    color: var(--text-color);
+  }
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TechStore Online</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Correo electrónico" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="button" onclick="iniciarSesion()">Entrar</button>
+        </form>
+    </div>
+
+    <script>
+        function iniciarSesion() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            if(email === "admin@techstore.com" && password === "1234"){
+                alert("Inicio de sesión exitoso");
+                window.location.href = "home.html"; // redirige al inicio
+            } else {
+                alert("Credenciales incorrectas");
+            }
+        }
+    </script>
+</body>
+</html>

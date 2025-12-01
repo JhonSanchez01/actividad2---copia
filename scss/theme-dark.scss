@@ -1,0 +1,143 @@
+// Tema oscuro
+body.dark-theme {
+  // Variables para el tema oscuro
+  $dark-background: #1a1a1a;
+  $dark-text: #e0e0e0;
+  $dark-card: #2d2d2d;
+  $dark-header: #2d2d2d;
+  $dark-footer: #2d2d2d;
+  $dark-border: #404040;
+
+  background-color: $dark-background;
+  color: $dark-text;
+
+  header {
+    background-color: $dark-header;
+    color: $dark-text;
+
+    .logo {
+      color: $dark-text;
+    }
+
+    .search-bar {
+      input {
+        background-color: $dark-card;
+        border-color: $dark-border;
+        color: $dark-text;
+      }
+
+      button {
+        background-color: $primary-color;
+        border-color: $primary-color;
+      }
+    }
+
+    .navbar {
+      border-top-color: $dark-border;
+
+      .nav-links a {
+        color: $dark-text;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+
+      .contact-info {
+        color: $dark-text;
+      }
+    }
+  }
+
+  .hero {
+    background: linear-gradient(135deg, darken($primary-color, 20%), darken($secondary-color, 20%));
+    color: $dark-text;
+  }
+
+  .categories .category-card {
+    background-color: $dark-card;
+    color: $dark-text;
+
+    h3 {
+      color: $dark-text;
+    }
+  }
+
+  .products {
+    background-color: lighten($dark-background, 5%);
+
+    .product-card {
+      background-color: $dark-card;
+      color: $dark-text;
+
+      .product-title {
+        color: $dark-text;
+      }
+
+      .product-price {
+        color: lighten($secondary-color, 10%);
+      }
+    }
+  }
+
+  footer {
+    background-color: $dark-footer;
+    color: $dark-text;
+
+    .footer-column h3 {
+      color: $dark-text;
+    }
+
+    .footer-bottom {
+      border-top-color: $dark-border;
+    }
+  }
+
+  // Ajustes para los botones en tema oscuro
+  .btn {
+    &-primary {
+      background-color: $primary-color;
+      color: $dark-text;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    &-secondary {
+      background-color: $secondary-color;
+      color: $dark-text;
+
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+
+  // Ajustes para el interruptor de tema en oscuro
+  .theme-switcher {
+    .theme-icon {
+      color: $dark-text;
+    }
+
+    .theme-text {
+      color: $dark-text;
+    }
+  }
+
+  .user-actions-compact .user-action-compact {
+    color: $dark-text;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  .main-nav .nav-links-compact a {
+    color: $dark-text;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}

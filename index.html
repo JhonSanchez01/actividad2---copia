@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore Online - Tu tienda de tecnología</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS para temas - Colores pasteles mejorados */
+        :root {
+            /* Colores pasteles suaves y armoniosos para tema claro */
+            --primary-color: #7a9c90; /* Verde menta pastel */
+            --secondary-color: #646c8d; /* Lila pastel */
+            --accent-color: #FFDAC1; /* Melocotón pastel */
+            --background-color: #FFFFF0; /* Marfil muy claro */
+            --text-color: #5D5D5D; /* Gris suave para texto */
+            --card-background: #FFFFFF;
+            --header-background: #FFFFFF;
+            --footer-background: #F8F8FF; /* Azul fantasma muy claro */
+            --border-color: #E8E8E8;
+            
+            /* Espaciado */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            
+            /* Bordes */
+            --border-radius: 12px; /* Bordes más redondeados */
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra más suave */
+        }
+
+        /* Tema oscuro usando :has() - Manteniendo tonos pastel */
+        body:has(#theme-toggle:checked) {
+            --primary-color: #8EC5B6; /* Verde menta más oscuro */
+            --secondary-color: #A6B0E3; /* Lila más oscuro */
+            --accent-color: #E8B796; /* Melocotón más oscuro */
+            --background-color: #2D3748; /* Gris azulado oscuro */
+            --text-color: #E2E8F0; /* Gris muy claro */
+            --card-background: #4A5568; /* Gris medio */
+            --header-background: #4A5568;
+            --footer-background: #4A5568;
+            --border-color: #718096;
+        }
+
+        /* Estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 16px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            font-size: 2.2rem;
+            color: var(--text-color);
+            font-weight: 300;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--header-background);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+        }
+
+        @media (max-width: 900px) {
+            .header-top {
+                flex-wrap: wrap;
+            }
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .logo i {
+            margin-right: var(--spacing-sm);
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .search-bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            max-width: 500px;
+            margin: 0 var(--spacing-lg);
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            outline: none;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .search-bar button {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            transform: scale(1.05);
+        }
+
+        .header-actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        @media (max-width: 900px) {
+            .header-actions {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: var(--spacing-md);
+            }
+        }
+
+        /* Interruptor de tema */
+        .theme-switcher {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-xs);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-switch-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        #theme-toggle {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        #theme-toggle:checked + .theme-slider {
+            background-color: var(--secondary-color);
+        }
+
+        #theme-toggle:checked + .theme-slider:before {
+            transform: translateX(26px);
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            border-radius: 24px;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-icon {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .theme-text {
+            font-size: 0.875rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        /* Navegación */
+        .main-nav .nav-links-compact {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .main-nav .nav-links-compact a {
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .main-nav .nav-links-compact a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-actions-compact {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .user-action-compact {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-xs);
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .user-action-compact:hover {
+            color: var(--primary-color);
+            background-color: var(--card-background);
+        }
+
+        .user-action-compact.cart {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .navbar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-links a {
+            transition: color 0.3s ease;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            background-color: var(--card-background);
+        }
+
+        .contact-info {
+            color: var(--text-color);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .contact-info i {
+            margin-right: var(--spacing-xs);
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+            font-weight: 300;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-button i {
+            margin-left: var(--spacing-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Categorías */
+        .categories {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .category-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .category-card:hover .category-image {
+            transform: scale(1.05);
+        }
+
+        .category-card h3 {
+            padding: var(--spacing-md);
+            text-align: center;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        /* Productos */
+        .products {
+            padding: var(--spacing-xl) 0;
+            background-color: color-mix(in srgb, var(--background-color) 90%, transparent);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .product-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            border-radius: 0;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: var(--spacing-md);
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .product-actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .product-actions .btn {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-background);
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .footer-column h3 {
+            margin-bottom: var(--spacing-md);
+            color: var(--text-color);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-column p {
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-links a, .footer-links i {
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-links i {
+            margin-right: var(--spacing-sm);
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <!-- Logo -->
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>TechStore Online</span>
+                </div>
+
+                <!-- Barra de búsqueda -->
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+
+                <!-- Acciones del usuario -->
+                <div class="header-actions">
+                    <!-- Interruptor de tema -->
+                    <label class="theme-switcher" for="theme-toggle" title="Cambiar tema">
+                        <i class="fas fa-sun theme-icon sun-icon"></i>
+                        <div class="theme-switch-wrapper">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="theme-slider"></span>
+                        </div>
+                        <i class="fas fa-moon theme-icon moon-icon"></i>
+                        <span class="theme-text">Tema</span>
+                    </label>
+
+                    <!-- Navegación compacta -->
+                    <nav class="main-nav">
+                        <ul class="nav-links-compact">
+                            <li><a href="productos.html">Productos</a></li>
+                            <li><a href="ofertas.html">Ofertas</a></li>
+                            <li><a href="contacto.html">Contacto</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- Botones de usuario compactos -->
+                    <div class="user-actions-compact">
+                        <a href="TechStoreLogin/login.html" class="user-action-compact" id="login-btn" title="Iniciar Sesión">
+                            <i class="fas fa-user"></i>
+                            <span class="action-text">Ingresar</span>
+                        </a>
+                        
+                        <a href="#" class="user-action-compact" title="Favoritos">
+                            <i class="fas fa-heart"></i>
+                            <span class="action-text">Favoritos</span>
+                        </a>
+                        
+                        <a href="#" class="user-action-compact cart" title="Carrito">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="action-text">Carrito</span>
+                            <span class="cart-count">3</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación secundaria -->
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="ofertas.html">Ofertas</a></li>
+                    <li><a href="novedades.html">Novedades</a></li>
+                    <li><a href="marcas.html">Marcas</a></li>
+                    <li><a href="soporte.html">Soporte</a></li>
+                </ul>
+                <div class="contact-info">
+                    <span><i class="fas fa-phone"></i> +1 234 567 890</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SECCIÓN HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>La mejor tecnología a tu alcance</h1>
+                <p>Descubre las últimas novedades en smartphones, laptops, accesorios y más con los mejores precios del mercado.</p>
+                <a href="ofertas.html" class="cta-button">Ver Ofertas <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE CATEGORÍAS -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Categorías Populares</h2>
+            <div class="categories-grid">
+               <a href="smartphones.html">
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="Smartphones" class="category-image">
+                    <h3>Smartphones</h3>
+                </div>
+                </a>
+                <a href="laptops.html">
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Laptops" class="category-image">
+                    <h3>Laptops</h3>
+                </div>
+                </a>
+                <a href="audio.html">
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Audio" class="category-image">
+                    <h3>Audio</h3>
+                </div>
+               </a>
+               <a href="tablets.html">
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Tablets" class="category-image">
+                    <h3>Tablets</h3>
+                </div>
+                </a>
+                    <a href="tv.html">
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="TV & Video" class="category-image">
+                    <h3>TV & Video</h3>
+                </div>
+                </a>
+                <a href="gaming.html">
+                <div class="category-card">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Gaming" class="category-image">
+                    <h3>Gaming</h3>
+                </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE PRODUCTOS -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Productos Destacados</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Smartphone X Pro">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Smartphone X Pro</h3>
+                        <p class="product-price">$899.99</p>
+                        <div class="product-actions">
+                            <a href="compra1.html" class="btn btn-primary">Comprar</a>
+                            <a href="detalles1.html" class="btn btn-secondary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Laptop Ultra Slim">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Laptop Ultra Slim</h3>
+                        <p class="product-price">$1,299.99</p>
+                        <div class="product-actions">
+                            <a href="compra2.html" class="btn btn-primary">Comprar</a>
+                            <a href="detalles2.html" class="btn btn-secondary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Auriculares Inalámbricos">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Auriculares Inalámbricos</h3>
+                        <p class="product-price">$199.99</p>
+                        <div class="product-actions">
+                            <a href="compras3.html" class="btn btn-primary">Comprar</a>
+                            <a href="detalles3.html" class="btn btn-secondary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Tablet Pro 10">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Tablet Pro 10"</h3>
+                        <p class="product-price">$599.99</p>
+                        <div class="product-actions">
+                            <a href="compras4.html" class="btn btn-primary">Comprar</a>
+                            <a href="detalles4.html" class="btn btn-secondary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>TechStore Online</h3>
+                    <p>Tu tienda de confianza para productos tecnológicos de última generación.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="ofertas.html">Ofertas</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categorías</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Laptops</a></li>
+                        <li><a href="#">Tablets</a></li>
+                        <li><a href="#">Accesorios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fas fa-envelope"></i> info@techstore.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Ciudad, País</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 TechStore Online. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            
+    
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                themeToggle.checked = true;
+            }
+            
+            themeToggle.addEventListener('change', function() {
+                localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>

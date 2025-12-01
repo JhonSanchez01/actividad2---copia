@@ -1,0 +1,39 @@
+.hero {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--text-color);
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-md);
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: var(--text-color);
+      padding: var(--spacing-md) var(--spacing-xl);
+      border-radius: var(--border-radius);
+      font-weight: bold;
+      @include transition(background-color, 0.3s, ease);
+
+      &:hover {
+        filter: brightness(90%);
+      }
+
+      i {
+        margin-left: var(--spacing-sm);
+      }
+    }
+  }
+}
