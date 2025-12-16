@@ -18,16 +18,35 @@
 
     <script>
         function iniciarSesion() {
-            let email = document.getElementById("email").value;
+            let email = document.getElementById("email").value.trim();
             let password = document.getElementById("password").value;
+
+            // Validación básica de email
+            if (!email || !email.includes('@')) {
+                alert("Por favor ingresa un correo electrónico válido");
+                return;
+            }
+
+            // Validación de contraseña
+            if (!password || password.length < 4) {
+                alert("La contraseña debe tener al menos 4 caracteres");
+                return;
+            }
 
             if(email === "admin@techstore.com" && password === "1234"){
                 alert("Inicio de sesión exitoso");
-                window.location.href = "home.html"; // redirige al inicio
+                window.location.href = "../../index.html"; // redirige al inicio
             } else {
                 alert("Credenciales incorrectas");
             }
         }
+
+        // Permitir login con Enter
+        document.getElementById("password").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                iniciarSesion();
+            }
+        });
     </script>
 </body>
 </html>
