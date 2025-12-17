@@ -1,15 +1,16 @@
 // Variables CSS para tema claro (valores por defecto)
 :root {
-  // Colores pasteles claros
-  --primary-color: #a8d8ea;
-  --secondary-color: #aa96da;
-  --accent-color: #fcbad3;
-  --background-color: #ffffd2;
-  --text-color: #333333;
-  --card-background: #ffffff;
-  --header-background: #ffffff;
-  --footer-background: #f5f5f5;
-  --border-color: #e0e0e0;
+  // Colores pasteles suaves y modernos para tema claro
+  --primary-color: #6B9B8A; // Verde menta pastel suave y moderno
+  --secondary-color: #8B9DC4; // Lila azulado pastel suave
+  --accent-color: #FFB5A7; // Melocotón coral pastel suave
+  --background-color: #FAFAF8; // Beige muy claro y suave
+  --text-color: #4A5568; // Gris azulado suave para mejor legibilidad
+  --card-background: #FFFFFF;
+  --header-background: #FFFFFF;
+  --footer-background: #F5F5F3; // Beige muy claro
+  --border-color: #E2E8F0; // Gris azulado muy claro
+  --hover-color: rgba(107, 155, 138, 0.1); // Verde menta translúcido para hovers
   
   // Espaciado
   --spacing-xs: 0.25rem;
@@ -19,19 +20,29 @@
   --spacing-xl: 2rem;
   
   // Bordes
-  --border-radius: 8px;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px; // Bordes más redondeados
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); // Sombra más suave y moderna
+  --box-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12); // Sombra para hover
 }
 
-// Variables para tema oscuro (se activan con :has)
-body:has(#theme-toggle:checked) {
-  --primary-color: #a8d8ea;
-  --secondary-color: #aa96da;
-  --accent-color: #fcbad3;
-  --background-color: #1a1a1a;
-  --text-color: #e0e0e0;
-  --card-background: #2d2d2d;
-  --header-background: #2d2d2d;
-  --footer-background: #2d2d2d;
-  --border-color: #404040;
+// Tema oscuro usando prefers-color-scheme (detección automática del sistema)
+// Colores modernos con toques pastel para modo oscuro
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Colores pastel vibrantes pero suaves para modo oscuro
+    --primary-color: #7FC4B3; // Verde menta pastel brillante
+    --secondary-color: #A8B8E8; // Lila azulado pastel brillante
+    --accent-color: #FFC4B5; // Melocotón coral pastel brillante
+    // Fondos oscuros modernos con toques sutiles de color
+    --background-color: #1A1F2E; // Azul oscuro profundo y moderno
+    --text-color: #E8EDF3; // Gris muy claro para excelente legibilidad
+    --card-background: #252B3A; // Azul gris oscuro con toque moderno
+    --header-background: #252B3A; // Mismo que cards para consistencia
+    --footer-background: #1F2532; // Ligeramente más oscuro que el fondo
+    --border-color: #3A4455; // Gris azulado medio para bordes sutiles
+    --hover-color: rgba(127, 196, 179, 0.15); // Verde menta translúcido para hovers
+    // Sombras más pronunciadas en modo oscuro
+    --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --box-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
 }
