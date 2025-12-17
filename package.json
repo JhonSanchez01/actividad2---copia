@@ -1,14 +1,22 @@
 {
-  "name": "actividad2",
+  "name": "techstore-online",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Tienda online de tecnología con diseño responsive y modo oscuro automático",
+  "main": "index.html",
   "scripts": {
+    "build": "sass scss/main.scss css/main.css",
+    "watch": "sass --watch scss/main.scss css/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "ecommerce",
+    "tienda",
+    "tecnologia",
+    "responsive",
+    "scss"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "sass": "^1.94.0"
   }

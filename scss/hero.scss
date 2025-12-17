@@ -3,37 +3,99 @@
   color: var(--text-color);
   padding: var(--spacing-xl) 0;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  @include transition(background, 0.3s, ease);
+
+  @include respond-to('phone') {
+    padding: var(--spacing-lg) 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    background-size: cover;
+    opacity: 0.5;
+  }
 
   .hero-content {
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 0 var(--spacing-md);
 
-    h1 {
-      font-size: 3rem;
+    @include respond-to('phone') {
+      padding: 0 var(--spacing-sm);
+    }
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.95); // Blanco suave con ligera transparencia
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra sutil para mejor legibilidad
+
+    @include respond-to('tablet') {
+      font-size: 2.5rem;
+    }
+
+    @include respond-to('phone') {
+      font-size: 1.8rem;
+      margin-bottom: var(--spacing-sm);
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-lg);
+    color: rgba(255, 255, 255, 0.9); // Blanco suave para el párrafo también
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); // Sombra sutil
+
+    @include respond-to('tablet') {
+      font-size: 1.1rem;
+    }
+
+    @include respond-to('phone') {
+      font-size: 1rem;
       margin-bottom: var(--spacing-md);
     }
+  }
 
-    p {
-      font-size: 1.2rem;
-      margin-bottom: var(--spacing-lg);
+  .cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: #FFFFFF; // Texto blanco para mejor contraste
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    @include transition(all, 0.3s, ease);
+    box-shadow: var(--box-shadow);
+
+    @include respond-to('phone') {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      font-size: 0.9rem;
     }
 
-    .cta-button {
-      display: inline-block;
-      background-color: var(--accent-color);
-      color: var(--text-color);
-      padding: var(--spacing-md) var(--spacing-xl);
-      border-radius: var(--border-radius);
-      font-weight: bold;
-      @include transition(background-color, 0.3s, ease);
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--box-shadow-hover);
+      filter: brightness(1.1);
+    }
 
-      &:hover {
-        filter: brightness(90%);
-      }
+    i {
+      margin-left: var(--spacing-sm);
+      @include transition(transform, 0.3s, ease);
+    }
 
-      i {
-        margin-left: var(--spacing-sm);
-      }
+    &:hover i {
+      transform: translateX(5px);
     }
   }
 }

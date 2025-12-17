@@ -2,20 +2,37 @@
   padding: var(--spacing-xl) 0;
   background-color: color-mix(in srgb, var(--background-color) 90%, transparent);
 
+  @include respond-to('phone') {
+    padding: var(--spacing-lg) 0;
+  }
+
   .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--spacing-lg);
+
+    @include respond-to('tablet') {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    @include respond-to('phone') {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--spacing-sm);
+    }
 
     .product-card {
       background-color: var(--card-background);
       border-radius: var(--border-radius);
       overflow: hidden;
       box-shadow: var(--box-shadow);
-      @include transition(transform, 0.3s, ease);
+      @include transition(all, 0.3s, ease);
+      border: 1px solid var(--border-color);
 
       &:hover {
-        transform: translateY(-5px);
+        transform: translateY(-6px);
+        box-shadow: var(--box-shadow-hover);
+        border-color: var(--primary-color);
       }
 
       .product-image {
@@ -23,24 +40,39 @@
         height: 200px;
         overflow: hidden;
 
+        @include respond-to('phone') {
+          height: 150px;
+        }
+
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          @include transition(transform, 0.3s, ease);
+          @include transition(transform, 0.5s, ease);
+          border-radius: 0;
         }
+      }
 
-        &:hover img {
-          transform: scale(1.05);
-        }
+      &:hover .product-image img {
+        transform: scale(1.08);
       }
 
       .product-info {
         padding: var(--spacing-md);
 
+        @include respond-to('phone') {
+          padding: var(--spacing-sm);
+        }
+
         .product-title {
           font-size: 1.2rem;
           margin-bottom: var(--spacing-sm);
+          font-weight: 500;
+
+          @include respond-to('phone') {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-xs);
+          }
         }
 
         .product-price {
@@ -48,15 +80,29 @@
           font-weight: bold;
           color: var(--secondary-color);
           margin-bottom: var(--spacing-md);
+
+          @include respond-to('phone') {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-sm);
+          }
         }
 
         .product-actions {
           @include flex(row, space-between, center);
           gap: var(--spacing-sm);
 
+          @include respond-to('phone') {
+            flex-direction: column;
+            gap: var(--spacing-xs);
+          }
+
           .btn {
             flex: 1;
             text-align: center;
+
+            @include respond-to('phone') {
+              width: 100%;
+            }
           }
         }
       }
